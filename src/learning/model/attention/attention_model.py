@@ -1,8 +1,8 @@
 import torch
 import torch.nn as nn
 
-from planning_by_abstracting_over_opponent_models.learning.model.attention.hard_attention import HardAttention
-from planning_by_abstracting_over_opponent_models.learning.model.attention.multihead_soft_attention import \
+from learning.model.attention.hard_attention import HardAttention
+from learning.model.attention.multihead_soft_attention import \
     MultiheadSoftAttention
 
 
