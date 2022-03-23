@@ -3,27 +3,27 @@ from typing import List
 
 import numpy as np
 
-from planning_by_abstracting_over_opponent_models.learning.reward_shaping.ammo_usage_component import AmmoUsageComponent
-from planning_by_abstracting_over_opponent_models.learning.reward_shaping.avoiding_bomb_component import \
+from learning.reward_shaping.ammo_usage_component import AmmoUsageComponent
+from learning.reward_shaping.avoiding_bomb_component import \
     AvoidingBombComponent
-from planning_by_abstracting_over_opponent_models.learning.reward_shaping.avoiding_flame_component import \
+from learning.reward_shaping.avoiding_flame_component import \
     AvoidingFlameComponent
-from planning_by_abstracting_over_opponent_models.learning.reward_shaping.avoiding_illegal_moves import \
+from learning.reward_shaping.avoiding_illegal_moves import \
     AvoidingIllegalMoves
-from planning_by_abstracting_over_opponent_models.learning.reward_shaping.catching_enemy_component import \
+from learning.reward_shaping.catching_enemy_component import \
     CatchingEnemyComponent
-from planning_by_abstracting_over_opponent_models.learning.reward_shaping.consecutive_actions_component import \
+from learning.reward_shaping.consecutive_actions_component import \
     ConsecutiveActionsComponent
-from planning_by_abstracting_over_opponent_models.learning.reward_shaping.enemy_killed_component import \
+from learning.reward_shaping.enemy_killed_component import \
     EnemyKilledComponent
-from planning_by_abstracting_over_opponent_models.learning.reward_shaping.mobility_component import MobilityComponent
-from planning_by_abstracting_over_opponent_models.learning.reward_shaping.picking_powerup_component import \
+from learning.reward_shaping.mobility_component import MobilityComponent
+from learning.reward_shaping.picking_powerup_component import \
     PickingPowerupComponent
-from planning_by_abstracting_over_opponent_models.learning.reward_shaping.planting_bomb_near_enemy_component import \
+from learning.reward_shaping.planting_bomb_near_enemy_component import \
     PlantingBombNearEnemyComponent
-from planning_by_abstracting_over_opponent_models.learning.reward_shaping.planting_bomb_near_wall_component import \
+from learning.reward_shaping.planting_bomb_near_wall_component import \
     PlantingBombNearWallComponent
-from planning_by_abstracting_over_opponent_models.learning.reward_shaping.reward_shaping_component import \
+from learning.reward_shaping.reward_shaping_component import \
     RewardShapingComponent
 
 

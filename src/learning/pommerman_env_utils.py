@@ -1,14 +1,14 @@
-from planning_by_abstracting_over_opponent_models.learning.model.agent_model import create_agent_model
-from planning_by_abstracting_over_opponent_models.pommerman_env.agents.cautious_agent import CautiousAgent
-from planning_by_abstracting_over_opponent_models.pommerman_env.agents.simple_agent import SimpleAgent
-from planning_by_abstracting_over_opponent_models.pommerman_env.agents.random_agent import RandomAgent
-from planning_by_abstracting_over_opponent_models.pommerman_env.agents.rl_agent import RLAgent
-from planning_by_abstracting_over_opponent_models.pommerman_env.agents.smart_random_agent import SmartRandomAgent, \
+from learning.model.agent_model import create_agent_model
+from pommerman_env.agents.cautious_agent import CautiousAgent
+from pommerman_env.agents.simple_agent import SimpleAgent
+from pommerman_env.agents.random_agent import RandomAgent
+from pommerman_env.agents.rl_agent import RLAgent
+from pommerman_env.agents.smart_random_agent import SmartRandomAgent, \
     SmartRandomAgentNoBomb
-from planning_by_abstracting_over_opponent_models.pommerman_env.agents.static_agent import StaticAgent
-from planning_by_abstracting_over_opponent_models.pommerman_env.pommerman_base_env import PommermanBaseEnv
-from planning_by_abstracting_over_opponent_models.pommerman_env.pommerman_cython_env import PommermanCythonEnv
-from planning_by_abstracting_over_opponent_models.pommerman_env.pommerman_python_env import PommermanPythonEnv
+from pommerman_env.agents.static_agent import StaticAgent
+from pommerman_env.pommerman_base_env import PommermanBaseEnv
+from pommerman_env.pommerman_cython_env import PommermanCythonEnv
+from pommerman_env.pommerman_python_env import PommermanPythonEnv
 
 
 def str_to_agent(s):

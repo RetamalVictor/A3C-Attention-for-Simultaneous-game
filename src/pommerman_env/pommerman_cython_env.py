@@ -8,8 +8,8 @@ import pommerman
 import sys
 PATH = "/home/victo/pommerman/obada/SM-MCTS/planning-by-abstracting-over-opponent-models"
 sys.path.append(PATH)
-from planning_by_abstracting_over_opponent_models.pommerman_env.agents.pommerman_agent import PommermanAgent
-from planning_by_abstracting_over_opponent_models.pommerman_env.pommerman_base_env import PommermanBaseEnv
+from pommerman_env.agents.pommerman_agent import PommermanAgent
+from pommerman_env.pommerman_base_env import PommermanBaseEnv
 
 
 class PommermanCythonEnv(PommermanBaseEnv):

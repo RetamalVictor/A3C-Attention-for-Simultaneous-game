@@ -3,8 +3,8 @@ import random
 
 from pommerman.constants import Action
 
-from planning_by_abstracting_over_opponent_models.pommerman_env.agents import action_prune
-from planning_by_abstracting_over_opponent_models.pommerman_env.agents.pommerman_agent import PommermanAgent
+from pommerman_env.agents import action_prune
+from pommerman_env.agents.pommerman_agent import PommermanAgent
 
 
 class SmartRandomAgent(PommermanAgent):

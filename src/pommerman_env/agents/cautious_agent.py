@@ -18,7 +18,7 @@ import numpy as np
 from pommerman import constants, utility
 from pommerman.agents import BaseAgent
 
-from planning_by_abstracting_over_opponent_models.pommerman_env.agents.pommerman_agent import PommermanAgent
+from pommerman_env.agents.pommerman_agent import PommermanAgent
 
 
 def position_is_in_corridor(board, position, perpendicular_dirs):

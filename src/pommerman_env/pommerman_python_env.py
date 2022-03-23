@@ -1,6 +1,6 @@
 import pommerman
 
-from planning_by_abstracting_over_opponent_models.pommerman_env.pommerman_base_env import PommermanBaseEnv
+from pommerman_env.pommerman_base_env import PommermanBaseEnv
 
 
 class PommermanPythonEnv(PommermanBaseEnv):

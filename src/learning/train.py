@@ -7,9 +7,9 @@ import torch.nn.functional as F
 from torch.nn.utils import clip_grad_norm_
 from torch.utils.tensorboard import SummaryWriter
 
-from planning_by_abstracting_over_opponent_models.learning.model.agent_loss import AgentLoss
-from planning_by_abstracting_over_opponent_models.learning.pommerman_env_utils import create_env
-from planning_by_abstracting_over_opponent_models.learning.reward_shaping.reward_shaper import strs_to_reward_shaper
+from learning.model.agent_loss import AgentLoss
+from learning.pommerman_env_utils import create_env
+from learning.reward_shaping.reward_shaper import strs_to_reward_shaper
 
 torch.autograd.set_detect_anomaly(True)
 

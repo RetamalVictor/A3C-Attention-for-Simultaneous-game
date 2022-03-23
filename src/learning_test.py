@@ -13,11 +13,11 @@ import torch.multiprocessing as mp
 from multiprocessing import Process
 
 
-from planning_by_abstracting_over_opponent_models.learning.model.agent_model import create_agent_model
-from planning_by_abstracting_over_opponent_models.config import cpu, gpu
-from planning_by_abstracting_over_opponent_models.learning.monitor import monitor
-from planning_by_abstracting_over_opponent_models.learning.model.shared_adam import SharedAdam
-from planning_by_abstracting_over_opponent_models.learning.train import train
+from learning.model.agent_model import create_agent_model
+from config import cpu, gpu
+from learning.monitor import monitor
+from learning.model.shared_adam import SharedAdam
+from learning.train import train
 
 
 if __name__ == '__main__':

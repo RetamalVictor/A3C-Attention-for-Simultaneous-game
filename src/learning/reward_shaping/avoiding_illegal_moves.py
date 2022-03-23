@@ -2,7 +2,7 @@
 
 from pommerman.constants import Action
 
-from planning_by_abstracting_over_opponent_models.learning.reward_shaping.reward_shaping_component import \
+from learning.reward_shaping.reward_shaping_component import \
     RewardShapingComponent
 
 

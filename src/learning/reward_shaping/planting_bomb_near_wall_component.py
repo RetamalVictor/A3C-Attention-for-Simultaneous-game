@@ -3,7 +3,7 @@
 import numpy as np
 from pommerman.constants import Item
 
-from planning_by_abstracting_over_opponent_models.learning.reward_shaping.reward_shaping_component import \
+from learning.reward_shaping.reward_shaping_component import \
     RewardShapingComponent
 
 
