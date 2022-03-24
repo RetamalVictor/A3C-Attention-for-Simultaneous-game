@@ -22,7 +22,10 @@ cdef class Pomme(object):
     cdef byte[constants.BOARD_SIZE][constants.BOARD_SIZE] _board
     cdef byte[constants.BOARD_SIZE][constants.BOARD_SIZE] _items
 
+    cpdef void set_training_agent(self, int training_agent)
     cdef void _set_action_space(self)
+    cpdef get_action_space(self)
+    cpdef int get_step_count(self)
     cdef void _set_observation_space(self)
     cdef void set_agents(self, list agents)
     cdef void make_board(self)

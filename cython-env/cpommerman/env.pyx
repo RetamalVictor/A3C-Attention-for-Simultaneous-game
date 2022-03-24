@@ -48,10 +48,8 @@ cdef class Pomme(object):
         self._num_items = num_items
         self._max_steps = max_steps
         self._is_partially_observable = is_partially_observable
-
         self.training_agent = -1
         self.model = forward_model.ForwardModel()
-
         # Observation and Action Spaces. These are both geared towards a single
         # agent even though the environment expects actions and returns
         # observations for all four agents. We do this so that it's clear what
@@ -60,8 +58,17 @@ cdef class Pomme(object):
         self._set_action_space()
         self._set_observation_space()
 
+    cpdef void set_training_agent(self, int training_agent):
+        self.training_agent = training_agent
+        
     cdef void _set_action_space(self):
         self.action_space = spaces.Discrete(6)
+
+    cpdef int get_step_count(self):
+        return self._step_count
+
+    cpdef get_action_space(self):
+        return self.action_space
 
     cdef void _set_observation_space(self):
         """The Observation Space for each agent.
