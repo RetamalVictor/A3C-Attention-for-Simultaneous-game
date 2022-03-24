@@ -1,9 +1,9 @@
 import torch
 import torch.nn as nn
 
-from planning_by_abstracting_over_opponent_models.learning.model.attention.attention_model import AttentionModel
-from planning_by_abstracting_over_opponent_models.learning.model.features_extractor import FeaturesExtractor
-from planning_by_abstracting_over_opponent_models.learning.model.opponent_model import OpponentModel
+from learning.model.attention.attention_model import AttentionModel
+from learning.model.features_extractor import FeaturesExtractor
+from learning.model.opponent_model import OpponentModel
 
 
 class AgentModel(nn.Module):
