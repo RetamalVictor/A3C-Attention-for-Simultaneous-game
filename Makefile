@@ -1,12 +1,13 @@
 install:
-	cd /content/tu-eind-AGSMCTS/playground &&\
+	cd ~/tu-eind-AGSMCTS/playground &&\
 		python3 -m pip install --upgrade pip &&\
 		pip install -U . &&\
-		cd /content/tu-eind-AGSMCTS/cython-env &&\
+		cd ~/tu-eind-AGSMCTS/cython-env &&\
 		mkdir installation &&\
-		python3 setup.py develop -d /content/tu-eind-AGSMCTS/cython-env/installation
+		python3 setup.py develop 
+		
 
 train:
-	cd /content/tu-eind-AGSMCTS/src &&\
+	cd ~/tu-eind-AGSMCTS/src &&\
 		python3 learning_test.py
   
