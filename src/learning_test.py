@@ -5,7 +5,7 @@ from multiprocessing import cpu_count
 from pathlib import Path
 from random import randint
 import sys
-PATH = "/home/victo/pommerman/obada/SM-MCTS/planning-by-abstracting-over-opponent-models"
+PATH = "/home/baierh/tu-eind-AGSMCTS/tu-eind-AGSMCTS"
 sys.path.append(PATH)
 
 import torch
@@ -34,7 +34,7 @@ if __name__ == '__main__':
 
     USE_CYTHON = True
     NB_STEPS = 1
-    SAVE_INTERVAL = 600
+    SAVE_INTERVAL = 45
     NB_FILTERS = 4
     NB_CONV_LAYERS = 32 
     LATENT_DIM = 128

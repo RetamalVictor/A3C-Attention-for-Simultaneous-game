@@ -216,7 +216,7 @@ def train(rank,
         if done:
 
             #Tensorboard logs
-            writer= SummaryWriter(log_dir="/home/victo/pommerman/obada/SM-MCTS/planning-by-abstracting-over-opponent-models/planning_by_abstracting_over_opponent_models/tensorboard")
+            writer= SummaryWriter(log_dir="/home/baierh/tu-eind-AGSMCTS/tu-eind-AGSMCTS/tensorboard")
 
             writer.add_scalar('Reward', running_reward,episodes)
             

@@ -2,8 +2,7 @@
 
 from collections import OrderedDict
 
-from 
-learning.reward_shaping.reward_shaping_component import \
+from learning.reward_shaping.reward_shaping_component import \
     RewardShapingComponent
 
 
