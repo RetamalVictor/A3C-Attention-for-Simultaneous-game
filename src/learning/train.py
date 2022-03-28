@@ -214,9 +214,9 @@ def train(rank,
 
         
         if done:
-	    with open("home/baierh/tu-eind-AGSMCTS/tu-eind-AGSMCTS/output-plots/results.txt","a") as f:
-		f.write(f"{running_reward},{episodes}")
-		f.close()
+            with open("home/baierh/tu-eind-AGSMCTS/tu-eind-AGSMCTS/output-plots/results.txt","a") as f:
+                f.write(f"{running_reward},{episodes}")
+                f.close()
             ##Tensorboard logs
             #writer= SummaryWriter(log_dir="/home/baierh/tu-eind-AGSMCTS/tu-eind-AGSMCTS/tensorboard")
 
