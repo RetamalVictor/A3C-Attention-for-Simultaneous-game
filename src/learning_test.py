@@ -33,8 +33,8 @@ if __name__ == '__main__':
     mp.set_start_method('spawn')
 
     USE_CYTHON = True
-    NB_STEPS = 1
-    SAVE_INTERVAL = 45
+    NB_STEPS = 800
+    SAVE_INTERVAL = 2500
     NB_FILTERS = 4
     NB_CONV_LAYERS = 32 
     LATENT_DIM = 128
@@ -44,7 +44,7 @@ if __name__ == '__main__':
     EXACT_HARD_ATTENTION = None
     MAX_GRAD_NORM = 0.8
     REWARD_SHAPERS = ["enemy_killed", "mobility", "picking_powerup", "avoiding_illegal_moves"]
-    DEVICE = "cpu"
+    DEVICE = torch.device("cpu")
     CHECK_POINT = None
     INCLUDE_OPPONENT_LOSS = 'store_true'
 
