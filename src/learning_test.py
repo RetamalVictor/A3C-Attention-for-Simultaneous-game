@@ -5,7 +5,7 @@ from multiprocessing import cpu_count
 from pathlib import Path
 from random import randint
 import sys
-PATH = "/home/baierh/tu-eind-AGSMCTS/tu-eind-AGSMCTS"
+PATH = "/home/victo/tu-eind-AGSMCTS/tu-eind-AGSMCTS"
 sys.path.append(PATH)
 
 import torch
@@ -82,11 +82,11 @@ if __name__ == '__main__':
     args = (shared_model,
             OPPONENT_CLASSES,
             SAVE_INTERVAL)
-    p1 = mp.Process(target=monitor, args=args)
-    p1.start()
-    processes.append(p1)
-    print("Started training.")
-    args = (RANK,
+    p = mp.Process(target=monitor, args=args)
+    p.start()
+    processes.append(p)
+    for RANK in range(NB_PROCESSES -1):
+        args = (RANK,
             SEED,
             USE_CYTHON,
             shared_model,
@@ -102,8 +102,9 @@ if __name__ == '__main__':
             MAX_GRAD_NORM,
             INCLUDE_OPPONENT_LOSS,
             DEVICE)
-    p2 = mp.Process(target=train, args=args)
-    p2.start()
-    processes.append(p2)
+        p = mp.Process(target=train, args=args)
+        p.start()
+        processes.append(p)
+    print("Started training.")
     for p in processes:
         p.join()
