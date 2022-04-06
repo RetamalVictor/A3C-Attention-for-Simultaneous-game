@@ -23,7 +23,7 @@ from learning.train import train
 if __name__ == '__main__':
     SEED = randint(1,10000)
     RANK = 1
-    NB_PROCESSES = cpu_count() - 1
+    NB_PROCESSES = 16
     print(NB_PROCESSES)
     NB_PLAYERS  = 4
     NB_OPPONENTS= NB_PLAYERS -1
