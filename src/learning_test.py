@@ -23,7 +23,8 @@ from learning.train import train
 if __name__ == '__main__':
     SEED = randint(1,10000)
     RANK = 1
-    NB_PROCESSES = 1
+    NB_PROCESSES = cpu_count() - 1
+    print(NB_PROCESSES)
     NB_PLAYERS  = 4
     NB_OPPONENTS= NB_PLAYERS -1
     OPPONENT_CLASSES = ["static", "static", "static"]
@@ -38,8 +39,8 @@ if __name__ == '__main__':
     NB_FILTERS = 4
     NB_CONV_LAYERS = 32 
     LATENT_DIM = 128
-    NB_SOFT_ATTENTION_HEADS = None
-    HARD_ATTENTION_RNN_HIDDEN_SIZE = None
+    NB_SOFT_ATTENTION_HEADS = 5
+    HARD_ATTENTION_RNN_HIDDEN_SIZE = 128
     APPROXIMATE_HARD_ATTENTION = 'store_true'
     EXACT_HARD_ATTENTION = None
     MAX_GRAD_NORM = 0.8
