@@ -214,7 +214,7 @@ def train(rank,
 
         
         if done:
-            with open("/home/baierh/tu-eind-AGSMCTS/tu-eind-AGSMCTS/output-plots/results_17_mp.txt","a") as f:
+            with open("/home/baierh/tu-eind-AGSMCTS/tu-eind-AGSMCTS/output-plots/experiment_2_attention_results.txt","a") as f:
                 f.write(f"{running_reward},{episodes} \n")
                 f.close()
             ##Tensorboard logs

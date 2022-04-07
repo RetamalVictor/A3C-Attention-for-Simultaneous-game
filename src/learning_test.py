@@ -5,7 +5,7 @@ from multiprocessing import cpu_count
 from pathlib import Path
 from random import randint
 import sys
-PATH = "/home/victo/tu-eind-AGSMCTS/tu-eind-AGSMCTS"
+PATH = "/home/baierh/tu-eind-AGSMCTS/tu-eind-AGSMCTS"
 sys.path.append(PATH)
 
 import torch
@@ -105,6 +105,6 @@ if __name__ == '__main__':
         p = mp.Process(target=train, args=args)
         p.start()
         processes.append(p)
-    print("Started training.")
+    print("Started training. Number of processes {len(processes)}")
     for p in processes:
         p.join()
