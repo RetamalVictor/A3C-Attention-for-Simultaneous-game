@@ -18,12 +18,14 @@ from config import cpu, gpu
 from learning.monitor import monitor
 from learning.model.shared_adam import SharedAdam
 from learning.train import train
+warnings.filterwarnings('ignore')
+torch.autograd.set_detect_anomaly(True)
 
 
 if __name__ == '__main__':
     SEED = randint(1,10000)
     RANK = 1
-    NB_PROCESSES = 16
+    NB_PROCESSES = 2
     print(NB_PROCESSES)
     NB_PLAYERS  = 4
     NB_OPPONENTS= NB_PLAYERS -1
@@ -39,8 +41,8 @@ if __name__ == '__main__':
     NB_FILTERS = 4
     NB_CONV_LAYERS = 32 
     LATENT_DIM = 128
-    NB_SOFT_ATTENTION_HEADS = 5
-    HARD_ATTENTION_RNN_HIDDEN_SIZE = 128
+    NB_SOFT_ATTENTION_HEADS = None
+    HARD_ATTENTION_RNN_HIDDEN_SIZE = None
     APPROXIMATE_HARD_ATTENTION = 'store_true'
     EXACT_HARD_ATTENTION = None
     MAX_GRAD_NORM = 0.8

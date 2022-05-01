@@ -6,18 +6,12 @@ from multiprocessing import cpu_count
 from pathlib import Path
 from random import randint
 import sys
-PATH = "/home/baierh/tu-eind-AGSMCTS/tu-eind-AGSMCTS"
+PATH = "/home/baierh/tu-eind-AGSMCTS/tu-eind-AGSMCTS/src/"
 sys.path.append(PATH)
 
 import torch
 import torch.multiprocessing as mp
-"""
-from planning_by_abstracting_over_opponent_models.learning.model.agent_model import create_agent_model
-from planning_by_abstracting_over_opponent_models.config import cpu, gpu
-from planning_by_abstracting_over_opponent_models.learning.monitor import monitor
-from planning_by_abstracting_over_opponent_models.learning.model.shared_adam import SharedAdam
-from planning_by_abstracting_over_opponent_models.learning.train import train
-"""
+
 
 from learning.model.agent_model import create_agent_model
 from config import cpu, gpu
@@ -32,12 +26,12 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--seed', type=int, default=randint(1, 100000))
 parser.add_argument('--nb-processes', type=int, default=cpu_count() - 1)
 parser.add_argument('--nb-players', type=int, default=2, choices=[2, 4])
-ss = "static, static, static"
+ss = "simple, simple, simple"
 parser.add_argument('--opponent-classes',
                     type=lambda s: [str(item).strip().lower() for item in s.split(',')],
                     default=ss)
 parser.add_argument('--nb-steps', type=int, default=32)
-parser.add_argument('--save-interval', type=int, default=3600)
+parser.add_argument('--save-interval', type=int, default=1300)
 parser.add_argument('--nb-conv-layers', type=int, default=4)
 parser.add_argument('--nb-filters', type=int, default=32)
 parser.add_argument('--latent-dim', type=int, default=128)
@@ -46,8 +40,8 @@ parser.add_argument('--hard-attention-rnn-hidden-size', type=int, default=None)
 parser.add_argument('--approximate-hard-attention', dest='approximate_hard_attention', action='store_true')
 parser.add_argument('--exact-hard-attention', dest='approximate_hard_attention', action='store_false')
 parser.add_argument('--max-grad-norm', type=float, default=0.8)
-# d = "enemy_killed, mobility, picking_powerup, planting_bomb_near_enemy, catching_enemy, planting_bomb_near_wall, avoiding_illegal_moves"
-d = "enemy_killed, mobility, picking_powerup, avoiding_illegal_moves"
+d = "enemy_killed, mobility, picking_powerup, planting_bomb_near_enemy, catching_enemy, planting_bomb_near_wall, avoiding_illegal_moves"
+#d = "enemy_killed, mobility, picking_powerup, avoiding_illegal_moves"
 parser.add_argument('--reward-shapers',
                     type=lambda s: [str(item).strip().lower() for item in s.split(',')],
                     default=d)

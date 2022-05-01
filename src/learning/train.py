@@ -5,7 +5,6 @@ import time
 import torch
 import torch.nn.functional as F
 from torch.nn.utils import clip_grad_norm_
-#from torch.utils.tensorboard import SummaryWriter
 
 from learning.model.agent_loss import AgentLoss
 from learning.pommerman_env_utils import create_env
@@ -214,15 +213,10 @@ def train(rank,
 
         
         if done:
-            with open("/home/baierh/tu-eind-AGSMCTS/tu-eind-AGSMCTS/output-plots/experiment_2_attention_results.txt","a") as f:
-                f.write(f"{running_reward},{episodes} \n")
+            with open("/home/baierh/tu-eind-AGSMCTS/tu-eind-AGSMCTS/output-plots/experiment_27_att_32mp_simpleag.txt","a") as f:
+                f.write(f"{running_reward},{running_opponent_policy_loss}\n")
                 f.close()
-            ##Tensorboard logs
-            #writer= SummaryWriter(log_dir="/home/baierh/tu-eind-AGSMCTS/tu-eind-AGSMCTS/tensorboard")
 
-            #writer.add_scalar('Reward', running_reward,episodes)
-            
-            #print(f"Episode time {time.time() - start_time}")
             episodes += 1
             episode_batches = 0
             running_total_loss = 0.0

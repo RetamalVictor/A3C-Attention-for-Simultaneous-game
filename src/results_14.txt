@@ -1,0 +1,3 @@
+Import error NSDE! You will not be able to render --> Cannot connect to "None"
+2
+Started training. Number of processes {len(processes)}
