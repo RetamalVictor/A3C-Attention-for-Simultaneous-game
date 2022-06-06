@@ -41,14 +41,14 @@ if __name__ == '__main__':
     NB_FILTERS = 4
     NB_CONV_LAYERS = 32 
     LATENT_DIM = 128
-    NB_SOFT_ATTENTION_HEADS = None
-    HARD_ATTENTION_RNN_HIDDEN_SIZE = None
+    NB_SOFT_ATTENTION_HEADS = 5
+    HARD_ATTENTION_RNN_HIDDEN_SIZE = 128
     APPROXIMATE_HARD_ATTENTION = 'store_true'
     EXACT_HARD_ATTENTION = None
     MAX_GRAD_NORM = 0.8
     REWARD_SHAPERS = ["enemy_killed", "mobility", "picking_powerup", "avoiding_illegal_moves"]
     DEVICE = torch.device("cpu")
-    CHECK_POINT = None
+    CHECK_POINT = '/home/hbaier/Pommerman-project/tu-eind-AGSMCTS/src/saved_models/simple,simple,simple_tv2-14/agent_model_30.pt'
     INCLUDE_OPPONENT_LOSS = 'store_true'
 
     MODEL_SPECS = {

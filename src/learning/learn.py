@@ -2,11 +2,11 @@
 import argparse
 import os
 import warnings
-from multiprocessing import cpu_count
+#from multiprocessing import cpu_count
 from pathlib import Path
 from random import randint
 import sys
-PATH = "/home/baierh/tu-eind-AGSMCTS/tu-eind-AGSMCTS/src/"
+PATH = "/home/hbaier/Pommerman-project/tu-eind-AGSMCTS/src/"
 sys.path.append(PATH)
 
 import torch
@@ -22,16 +22,17 @@ from learning.train import train
 warnings.filterwarnings('ignore')
 torch.autograd.set_detect_anomaly(True)
 
+cpu_count = int(os.environ['SLURM_JOB_CPUS_PER_NODE'])
 parser = argparse.ArgumentParser()
 parser.add_argument('--seed', type=int, default=randint(1, 100000))
-parser.add_argument('--nb-processes', type=int, default=cpu_count() - 1)
+parser.add_argument('--nb-processes', type=int, default=cpu_count - 1)
 parser.add_argument('--nb-players', type=int, default=2, choices=[2, 4])
 ss = "simple, simple, simple"
 parser.add_argument('--opponent-classes',
                     type=lambda s: [str(item).strip().lower() for item in s.split(',')],
                     default=ss)
 parser.add_argument('--nb-steps', type=int, default=32)
-parser.add_argument('--save-interval', type=int, default=1300)
+parser.add_argument('--save-interval', type=int, default=3200)
 parser.add_argument('--nb-conv-layers', type=int, default=4)
 parser.add_argument('--nb-filters', type=int, default=32)
 parser.add_argument('--latent-dim', type=int, default=128)
@@ -123,5 +124,8 @@ if __name__ == '__main__':
         p.start()
         processes.append(p)
     print("Started training.")
+    print(f"CPU_count {cpu_count}")
+    print(f"Number of processes: {nb_processes}, initialized: {len(processes)}")
+    print(f"Cython: {use_cython}")
     for p in processes:
         p.join()

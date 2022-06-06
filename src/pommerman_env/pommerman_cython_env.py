@@ -6,7 +6,7 @@ import cpommerman
 import pommerman
 
 import sys
-PATH = "/home/victo/pommerman/obada/SM-MCTS/planning-by-abstracting-over-opponent-models"
+PATH = "/home/hbaier/Pommerman-project/tu-eind-AGSMCTS/src/"
 sys.path.append(PATH)
 from pommerman_env.agents.pommerman_agent import PommermanAgent
 from pommerman_env.pommerman_base_env import PommermanBaseEnv

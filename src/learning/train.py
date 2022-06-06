@@ -210,12 +210,12 @@ def train(rank,
         running_opponent_policy_loss += opponent_policy_loss.item()
         running_reward += reward
         episode_batches += 1
+        with open("/home/hbaier/Pommerman-project/tu-eind-AGSMCTS/output/results/example_att_1","a") as f:
+            f.write(f"{reward},{opponent_policy_loss.item()}\n")
+            f.close()
 
         
         if done:
-            with open("/home/baierh/tu-eind-AGSMCTS/tu-eind-AGSMCTS/output-plots/experiment_27_att_32mp_simpleag.txt","a") as f:
-                f.write(f"{running_reward},{running_opponent_policy_loss}\n")
-                f.close()
 
             episodes += 1
             episode_batches = 0

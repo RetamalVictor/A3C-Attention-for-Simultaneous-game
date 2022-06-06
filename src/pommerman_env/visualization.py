@@ -2,7 +2,7 @@ import pommerman
 from pommerman import agents
 from pathlib import Path
 import sys
-PATH = "/home/baierh/tu-eind-AGSMCTS/tu-eind-AGSMCTS/src/"
+PATH = "/home/hbaier/tu-eind-AGSMCTS/tu-eind-AGSMCTS/src/"
 sys.path.append(PATH)
 
 from config import cpu, gpu
