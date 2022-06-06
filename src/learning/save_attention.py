@@ -1,17 +1,14 @@
-# partially inspired by https://github.com/ikostrikov/pytorch-a3c/blob/master/train.py
 from pathlib import Path
 
 import time
 import torch
 import torch.nn.functional as F
 from torch.nn.utils import clip_grad_norm_
+import numpy as np
 
 from learning.model.agent_loss import AgentLoss
 from learning.pommerman_env_utils import create_env
 from learning.reward_shaping.reward_shaper import strs_to_reward_shaper
-
-torch.autograd.set_detect_anomaly(True)
-
 
 def reshape_tensors_for_loss_func(steps,
                                   nb_opponents,
@@ -40,7 +37,6 @@ def reshape_tensors_for_loss_func(steps,
     opponent_actions_ground_truths = opponent_actions_ground_truths.to(device)
 
     return opponent_log_probs, opponent_actions_ground_truths
-
 
 def collect_trajectory(env,
                        state,
@@ -93,7 +89,11 @@ def collect_trajectory(env,
         opponent_log_probs.append(opponent_log_prob.squeeze(0))
         opponent_actions = torch.LongTensor(opponent_actions)
         opponent_actions_ground_truths.append(opponent_actions)
-        opponent_influences.append(opponent_influence)
+        with open("/home/hbaier/Pommerman-project/tu-eind-AGSMCTS/output/results/example_att_3","a") as f:
+            f.write(f"\n")
+            np.savetxt(f,opponent_influence.detach().cpu().numpy()[0])
+            f.close()        
+        opponent_influences.append(opponent_influence.detach().cpu().numpy()[0])
     if done:
         state = env.reset()
         reward_shaper.reset()
@@ -114,15 +114,9 @@ def collect_trajectory(env,
                                                         device)
     return steps, state, done, running_reward, agent_trajectory, opponent_trajectory, opponent_influences
 
-
-def ensure_shared_grads(model, shared_model):
-    for param, shared_param in zip(model.parameters(), shared_model.parameters()):
-        if shared_param.grad is not None:
-            return
-        shared_param._grad = param.grad
-
-
-def train(rank,
+def Save_attention(
+        save_interval,
+          rank,
           seed,
           use_cython,
           shared_model,
@@ -147,7 +141,7 @@ def train(rank,
                              nb_opponents,
                              opponent_classes,
                              device,
-                             train=True)
+                             train=False)
     agent_model = agents[0].agent_model
     state = env.reset()
     # RL
@@ -172,6 +166,7 @@ def train(rank,
     start_time = time.time()
     while True:
         # sync with the shared model
+        time.sleep(save_interval)
         agent_model.load_state_dict(shared_model.state_dict())
         steps, state, done, reward, agent_trajectory, opponent_trajectory, opponent_influence = collect_trajectory(env=env,
                                                                                                state=state,
@@ -186,34 +181,10 @@ def train(rank,
         agent_rewards, agent_values, agent_log_probs, agent_entropies = agent_trajectory
         opponent_log_probs, opponent_actions_ground_truths = opponent_trajectory
         
-        
+        #This is not needed
         # backward step
-        optimizer.zero_grad()
-        agent_policy_loss, agent_value_loss, opponent_policy_loss = criterion(
-            agent_rewards,
-            agent_log_probs,
-            agent_values,
-            agent_entropies,
-            opponent_log_probs,
-            opponent_actions_ground_truths,
-            opponent_coefs)
-        total_loss = agent_policy_loss + agent_value_loss
-        if include_opponent_loss:
-            total_loss = total_loss + opponent_policy_loss
-        total_loss.backward()
-        if max_grad_norm is not None:
-            clip_grad_norm_(agent_model.parameters(), max_grad_norm)
-        ensure_shared_grads(agent_model, shared_model)
-        optimizer.step()
-
-        running_total_loss += total_loss.item()
-        running_agent_policy_loss += agent_policy_loss.item()
-        running_agent_value_loss += agent_value_loss.item()
-        running_opponent_policy_loss += opponent_policy_loss.item()
-        running_reward += reward
-        episode_batches += 1
-        with open("/home/hbaier/Pommerman-project/tu-eind-AGSMCTS/output/results/example_att_2","a") as f:
-            f.write(f"{reward},{opponent_policy_loss.item()}\n")
+        with open("/home/hbaier/Pommerman-project/tu-eind-AGSMCTS/output/results/example_att_3","a") as f:
+            f.write(f"{reward},{steps}\n")
             f.close()
 
         
@@ -226,3 +197,7 @@ def train(rank,
             running_agent_value_loss = 0.0
             running_opponent_policy_loss = 0.0
             running_reward = 0.0
+
+        
+    
+

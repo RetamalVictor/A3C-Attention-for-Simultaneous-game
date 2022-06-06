@@ -18,6 +18,8 @@ from config import cpu, gpu
 from learning.monitor import monitor
 from learning.model.shared_adam import SharedAdam
 from learning.train import train
+from learning.save_attention import Save_attention
+
 warnings.filterwarnings('ignore')
 torch.autograd.set_detect_anomaly(True)
 
@@ -25,7 +27,7 @@ torch.autograd.set_detect_anomaly(True)
 if __name__ == '__main__':
     SEED = randint(1,10000)
     RANK = 1
-    NB_PROCESSES = 2
+    NB_PROCESSES = 3
     print(NB_PROCESSES)
     NB_PLAYERS  = 4
     NB_OPPONENTS= NB_PLAYERS -1
@@ -48,7 +50,7 @@ if __name__ == '__main__':
     MAX_GRAD_NORM = 0.8
     REWARD_SHAPERS = ["enemy_killed", "mobility", "picking_powerup", "avoiding_illegal_moves"]
     DEVICE = torch.device("cpu")
-    CHECK_POINT = '/home/hbaier/Pommerman-project/tu-eind-AGSMCTS/src/saved_models/simple,simple,simple_tv2-14/agent_model_30.pt'
+    CHECK_POINT = '/home/hbaier/Pommerman-project/tu-eind-AGSMCTS/src/saved_models/simple,simple,simple_tv2-4/agent_model_11.pt'
     INCLUDE_OPPONENT_LOSS = 'store_true'
 
     MODEL_SPECS = {
@@ -87,7 +89,31 @@ if __name__ == '__main__':
     p = mp.Process(target=monitor, args=args)
     p.start()
     processes.append(p)
-    for RANK in range(NB_PROCESSES -1):
+
+    #initializing saving attention process
+    SAVE_INTERVAL_att = 3
+    args = (SAVE_INTERVAL_att,
+            RANK,
+            SEED,
+            USE_CYTHON,
+            shared_model,
+            optimizer,
+            counter,
+            lock,
+            MODEL_SPECS,
+            NB_STEPS,
+            NB_ACTIONS,
+            NB_OPPONENTS,
+            OPPONENT_CLASSES,
+            REWARD_SHAPERS,
+            MAX_GRAD_NORM,
+            INCLUDE_OPPONENT_LOSS,
+            DEVICE)
+    p = mp.Process(target=Save_attention, args=args)
+    p.start()
+    processes.append(p)
+
+    for RANK in range(NB_PROCESSES -2):
         args = (RANK,
             SEED,
             USE_CYTHON,
@@ -107,6 +133,6 @@ if __name__ == '__main__':
         p = mp.Process(target=train, args=args)
         p.start()
         processes.append(p)
-    print("Started training. Number of processes {len(processes)}")
+    print(f"Started training. Number of processes {len(processes)}")
     for p in processes:
         p.join()

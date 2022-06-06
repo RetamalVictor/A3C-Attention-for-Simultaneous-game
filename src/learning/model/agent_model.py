@@ -50,9 +50,7 @@ class AgentModel(nn.Module):
         opponent_outputs = [opponent_model(features) for opponent_model in self.opponent_models]
         opponent_latents, opponent_policies = list(zip(*opponent_outputs))
         agent_latent, opponent_influence = self.attention_model(agent_latent, opponent_latents)
-        with open("/home/hbaier/Pommerman-project/tu-eind-AGSMCTS/output/attention_values/try-2.txt","a") as f:
-            f.write(f"{opponent_influence.detach().cpu().numpy()}\n")
-            f.close()
+
 
         # output
         agent_head = self.agent_head_layer(agent_latent)
