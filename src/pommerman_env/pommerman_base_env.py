@@ -1,3 +1,15 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+# ----------------------------------------------------------------------------
+# Created By  : Obada Aljabasini
+# Last modification Date: 22/07/2022
+#  - Victor Retamal --  Added documentation, Fixed formatting and bugs in
+#                        get features.
+# version ='1.0'
+# ---------------------------------------------------------------------------
+""" The module contains the parent class to ensure functioning environment """
+# ---------------------------------------------------------------------------
+
 import abc
 import numpy as np
 
@@ -6,6 +18,14 @@ from pommerman.constants import Item
 
 
 class PommermanBaseEnv(abc.ABC):
+
+    """
+    This class is the default abstract class to generate environments.
+    The board size is the one uses in the original gym pommerman env.
+
+    Important method -> Extract features. It will extract the information
+    from the state, and return it as a Torch.Tensor.
+    """
 
     def __init__(self, nb_players):
         self.board_size = 11
@@ -49,10 +69,25 @@ class PommermanBaseEnv(abc.ABC):
         raise NotImplementedError()
 
     def transform_rewards(self, rewards):
-        rewards = np.asarray(rewards[:self.nb_players])
+        """
+        This method transform the reward into a np array
+        """
+        rewards = np.asarray(rewards[: self.nb_players])
         return rewards
 
     def get_agent_position_map(self, state, index):
+        """
+        This method return the position of the indicated agent,
+        only if it's alive.
+
+        Parameters:
+        - state: State observation coming from the Pommerman environment.
+        - index: The selected player to extract. Only 1 to 4.
+
+        Return:
+        - result: array (11,11) with "1" in the position of the agent.
+        """
+
         result = np.zeros((self.board_size, self.board_size)).astype(float)
         idd = 10 + index
         if idd in state[0]["alive"]:
@@ -61,10 +96,25 @@ class PommermanBaseEnv(abc.ABC):
         return result
 
     def get_features(self, state):
+        """
+        This method returns the state space maped to a torch tensor.
+        The shape of the final tensor is (nb_players, 18, 11, 11).
+
+        Parameters:
+        - state: State observation coming from the Pommerman environment.
+
+        Return:
+        - Torch.vector
+        """
+        # Extracting board from state
         board_tuple = (self.board_size, self.board_size)
         features = np.zeros((self.nb_players, 18, self.board_size, self.board_size))
-        agent_position_maps = [self.get_agent_position_map(state, i) for i in range(self.nb_players)]
+        agent_position_maps = [
+            self.get_agent_position_map(state, i) for i in range(self.nb_players)
+        ]
         board = state[0]["board"]
+
+        # Extraction of general information
         passage_position_map = (board == Item.Passage.value).astype(float)
         rigid_wall_position_map = (board == Item.Rigid.value).astype(float)
         wood_wall_position_map = (board == Item.Wood.value).astype(float)
@@ -72,20 +122,34 @@ class PommermanBaseEnv(abc.ABC):
         extra_bomb_position_map = (board == Item.ExtraBomb.value).astype(float)
         incr_range_position_map = (board == Item.IncrRange.value).astype(float)
         kick_position_map = (board == Item.Kick.value).astype(float)
-        current_step_map = np.full(board_tuple, state[0]["step_count"] / self.max_steps).astype(float)
+        current_step_map = np.full(
+            board_tuple, state[0]["step_count"] / self.max_steps
+        ).astype(float)
+
+        # Extraction of agents information
         for agent_id in range(self.nb_players):
             agent_state = state[agent_id]
             bomb_blast_strength_map = agent_state["bomb_blast_strength"].astype(float)
             bomb_life_map = agent_state["bomb_life"].astype(float)
             agent_position_map = agent_position_maps[agent_id]
             ammo_map = np.full(board_tuple, agent_state["ammo"]).astype(float)
-            blast_strength_map = np.full(board_tuple, agent_state["blast_strength"]).astype(float)
-            can_kick_map = np.full(board_tuple, int(agent_state["can_kick"])).astype(float)
+            blast_strength_map = np.full(
+                board_tuple, agent_state["blast_strength"]
+            ).astype(float)
+            can_kick_map = np.full(board_tuple, int(agent_state["can_kick"])).astype(
+                float
+            )
             teammate_existence_map = np.zeros(board_tuple).astype(float)
-            next_index, opposite_index, prev_index = (agent_id + 1) % 4, (agent_id + 2) % 4, (agent_id + 3) % 4
-            opponents_position_map = [agent_position_maps[next_index],
-                                      agent_position_maps[opposite_index],
-                                      agent_position_maps[prev_index]]
+            next_index, opposite_index, prev_index = (
+                (agent_id + 1) % 4,
+                (agent_id + 2) % 4,
+                (agent_id + 3) % 4,
+            )
+            opponents_position_map = [
+                agent_position_maps[next_index],
+                agent_position_maps[opposite_index],
+                agent_position_maps[prev_index],
+            ]
             features_map = [
                 bomb_blast_strength_map,
                 bomb_life_map,
@@ -102,11 +166,11 @@ class PommermanBaseEnv(abc.ABC):
                 extra_bomb_position_map,
                 incr_range_position_map,
                 kick_position_map,
-                current_step_map
+                current_step_map,
             ]
             features[agent_id] = np.stack(features_map, axis=0).astype(float)
+
         features = torch.from_numpy(features).float()
         # (nb_players, 18, 11, 11), swap width and height
         features = features.permute(0, 1, 3, 2)
         return features
-
