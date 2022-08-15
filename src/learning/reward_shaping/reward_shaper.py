@@ -4,27 +4,23 @@ from typing import List
 import numpy as np
 
 from learning.reward_shaping.ammo_usage_component import AmmoUsageComponent
-from learning.reward_shaping.avoiding_bomb_component import \
-    AvoidingBombComponent
-from learning.reward_shaping.avoiding_flame_component import \
-    AvoidingFlameComponent
-from learning.reward_shaping.avoiding_illegal_moves import \
-    AvoidingIllegalMoves
-from learning.reward_shaping.catching_enemy_component import \
-    CatchingEnemyComponent
-from learning.reward_shaping.consecutive_actions_component import \
-    ConsecutiveActionsComponent
-from learning.reward_shaping.enemy_killed_component import \
-    EnemyKilledComponent
+from learning.reward_shaping.avoiding_bomb_component import AvoidingBombComponent
+from learning.reward_shaping.avoiding_flame_component import AvoidingFlameComponent
+from learning.reward_shaping.avoiding_illegal_moves import AvoidingIllegalMoves
+from learning.reward_shaping.catching_enemy_component import CatchingEnemyComponent
+from learning.reward_shaping.consecutive_actions_component import (
+    ConsecutiveActionsComponent,
+)
+from learning.reward_shaping.enemy_killed_component import EnemyKilledComponent
 from learning.reward_shaping.mobility_component import MobilityComponent
-from learning.reward_shaping.picking_powerup_component import \
-    PickingPowerupComponent
-from learning.reward_shaping.planting_bomb_near_enemy_component import \
-    PlantingBombNearEnemyComponent
-from learning.reward_shaping.planting_bomb_near_wall_component import \
-    PlantingBombNearWallComponent
-from learning.reward_shaping.reward_shaping_component import \
-    RewardShapingComponent
+from learning.reward_shaping.picking_powerup_component import PickingPowerupComponent
+from learning.reward_shaping.planting_bomb_near_enemy_component import (
+    PlantingBombNearEnemyComponent,
+)
+from learning.reward_shaping.planting_bomb_near_wall_component import (
+    PlantingBombNearWallComponent,
+)
+from learning.reward_shaping.reward_shaping_component import RewardShapingComponent
 
 
 class RewardShaper:
@@ -55,6 +51,6 @@ def strs_to_reward_shaper(strs):
         "picking_powerup": PickingPowerupComponent,
         "planting_bomb_near_wall": PlantingBombNearWallComponent,
         "planting_bomb_near_enemy": PlantingBombNearEnemyComponent,
-        "avoiding_illegal_moves": AvoidingIllegalMoves
+        "avoiding_illegal_moves": AvoidingIllegalMoves,
     }
     return RewardShaper([d[s]() for s in strs])

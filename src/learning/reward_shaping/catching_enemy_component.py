@@ -2,12 +2,10 @@
 
 import numpy as np
 
-from learning.reward_shaping.reward_shaping_component import \
-    RewardShapingComponent
+from learning.reward_shaping.reward_shaping_component import RewardShapingComponent
 
 
 class CatchingEnemyComponent(RewardShapingComponent):
-
     def __init__(self, catch_enemy_reward=0.001):
         super().__init__()
         self.catch_enemy_reward = catch_enemy_reward
@@ -16,11 +14,11 @@ class CatchingEnemyComponent(RewardShapingComponent):
 
     @staticmethod
     def closest_enemy(curr_state):
-        my_pose = curr_state['position']
+        my_pose = curr_state["position"]
         closest_enemy_id = -1
         closest_enemy_dist = float("inf")
-        for e in curr_state['enemies']:
-            enemy_pose = np.argwhere(curr_state['board'] == e)
+        for e in curr_state["enemies"]:
+            enemy_pose = np.argwhere(curr_state["board"] == e)
             if len(enemy_pose) == 0:
                 continue
             dist2_enemy = np.linalg.norm(my_pose - enemy_pose)
@@ -39,8 +37,13 @@ class CatchingEnemyComponent(RewardShapingComponent):
             self.closest_enemy_id_prev = closest_enemy_id_cur
             self.closest_enemy_dist_prev = closest_enemy_dist_cur
         else:
-            catching_thre = 4  # consider catching when close at most this much to the enemy
-            if closest_enemy_dist_cur < self.closest_enemy_dist_prev and closest_enemy_dist_cur < catching_thre:
+            catching_thre = (
+                4  # consider catching when close at most this much to the enemy
+            )
+            if (
+                closest_enemy_dist_cur < self.closest_enemy_dist_prev
+                and closest_enemy_dist_cur < catching_thre
+            ):
                 reward = self.catch_enemy_reward
                 self.closest_enemy_dist_prev = closest_enemy_dist_cur
             if closest_enemy_dist_cur <= 1.1:  # got that close

@@ -2,8 +2,7 @@
 
 import numpy as np
 
-from learning.reward_shaping.reward_shaping_component import \
-    RewardShapingComponent
+from learning.reward_shaping.reward_shaping_component import RewardShapingComponent
 
 
 def is_between(a, b, c):
@@ -36,7 +35,6 @@ class Point:
 
 
 class AvoidingFlameComponent(RewardShapingComponent):
-
     def __init__(self, on_flame_reward=-0.01):
         super().__init__()
         self.on_flame_reward = on_flame_reward
@@ -46,8 +44,9 @@ class AvoidingFlameComponent(RewardShapingComponent):
 
     def shape(self, curr_state, curr_action):
         s = 0
-        bombs_pose = np.argwhere(curr_state['bomb_life'] != 0)
+        bombs_pose = np.argwhere(curr_state["bomb_life"] != 0)
         for bp in bombs_pose:
+
             def rot_deg90cw(point):
                 new_point = [0, 0]
                 new_point[0] = point[1]
@@ -55,8 +54,8 @@ class AvoidingFlameComponent(RewardShapingComponent):
                 return new_point
 
             # print(type(bp))
-            factor = 1 / curr_state['bomb_life'][tuple(bp)]  # inverse of time left
-            blast_strength = curr_state['bomb_blast_strength'][tuple(bp)]
+            factor = 1 / curr_state["bomb_life"][tuple(bp)]  # inverse of time left
+            blast_strength = curr_state["bomb_blast_strength"][tuple(bp)]
 
             # blast directions
             blast_n = Point(0, 1).scale(blast_strength)
@@ -66,9 +65,13 @@ class AvoidingFlameComponent(RewardShapingComponent):
 
             # agent on blast direction?
             bp_pose = rot_deg90cw(bp)
-            my_pose = rot_deg90cw(curr_state['position'])
-            my_pose = Point(my_pose[0] - bp_pose[0], my_pose[1] - bp_pose[1])  # my pose relative to the bomb!
-            on_blast_direct = is_between(blast_n, blast_s, my_pose) or is_between(blast_w, blast_e, my_pose)
+            my_pose = rot_deg90cw(curr_state["position"])
+            my_pose = Point(
+                my_pose[0] - bp_pose[0], my_pose[1] - bp_pose[1]
+            )  # my pose relative to the bomb!
+            on_blast_direct = is_between(blast_n, blast_s, my_pose) or is_between(
+                blast_w, blast_e, my_pose
+            )
             if on_blast_direct:
                 s += self.on_flame_reward * factor
         return s

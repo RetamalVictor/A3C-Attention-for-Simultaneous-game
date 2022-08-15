@@ -1,9 +1,7 @@
-
 import abc
 
 
 class RewardShapingComponent(abc.ABC):
-
     def __init__(self):
         self.prev_state = None
 
