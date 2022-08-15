@@ -1,11 +1,9 @@
 # a slightly modified version of https://github.com/haidertom/Pommerman/blob/master/demonstration.ipynb
 
-from learning.reward_shaping.reward_shaping_component import \
-    RewardShapingComponent
+from learning.reward_shaping.reward_shaping_component import RewardShapingComponent
 
 
 class ConsecutiveActionsComponent(RewardShapingComponent):
-
     def __init__(self, consecutive_actions_reward=-0.01):
         super().__init__()
         self.consecutive_actions_reward = consecutive_actions_reward
@@ -28,4 +26,3 @@ class ConsecutiveActionsComponent(RewardShapingComponent):
     def reset(self):
         self.prev_action = None
         self.cons_action_counter = 0
-

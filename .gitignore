@@ -1,3 +1,9 @@
+# Output
+output-plots/
+results/
+*.png
+*.sh
+
 # Pycharm
 .idea
 saved_models/

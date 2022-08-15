@@ -2,12 +2,10 @@
 
 from collections import OrderedDict
 
-from learning.reward_shaping.reward_shaping_component import \
-    RewardShapingComponent
+from learning.reward_shaping.reward_shaping_component import RewardShapingComponent
 
 
 class MobilityComponent(RewardShapingComponent):
-
     def __init__(self, mobility_reward=0.005, buffer_length=121):
         super().__init__()
         self.mobility_reward = mobility_reward
@@ -15,7 +13,7 @@ class MobilityComponent(RewardShapingComponent):
         self.last_positions = OrderedDict()
 
     def shape(self, curr_state, curr_action):
-        pos = tuple(curr_state['position'])
+        pos = tuple(curr_state["position"])
         reward = 0
         if len(self.last_positions) > 0 and pos not in self.last_positions:
             reward = self.mobility_reward
@@ -27,4 +25,3 @@ class MobilityComponent(RewardShapingComponent):
     def reset(self):
         super().reset()
         self.last_positions = OrderedDict()
-

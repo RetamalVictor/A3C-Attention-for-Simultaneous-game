@@ -8,7 +8,7 @@ from pommerman_env.agents.pommerman_agent import PommermanAgent
 
 
 class SmartRandomAgent(PommermanAgent):
-    """ random with filtered actions"""
+    """random with filtered actions"""
 
     def reset_agent(self):
         self.last_obs = None

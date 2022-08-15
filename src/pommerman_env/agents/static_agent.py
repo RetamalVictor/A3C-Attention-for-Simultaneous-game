@@ -6,7 +6,7 @@ from pommerman_env.agents.pommerman_agent import PommermanAgent
 
 
 class StaticAgent(PommermanAgent):
-    """ Static agent"""
+    """Static agent"""
 
     def reset_agent(self):
         pass
