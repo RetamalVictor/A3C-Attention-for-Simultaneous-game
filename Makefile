@@ -5,7 +5,7 @@ install:
 		pip install -r requirements.txt &&\
 		cd ~/A3C-Attention-for-Simultaneous-game/playground &&\
 		pip install -U . &&\
-		cd ~/tu-eind-AGSMCTS/cython-env &&\
+		cd ~/A3C-Attention-for-Simultaneous-game/cython-env &&\
 		python3 setup.py develop -d ~/.pommerman/lib/python3.8/site-packages
 		
 train:
