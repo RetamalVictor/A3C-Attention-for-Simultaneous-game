@@ -18,7 +18,7 @@ from pathlib import Path
 from random import randint
 import sys
 
-PATH = "/home/hbaier/Pommerman-project/tu-eind-AGSMCTS/src/"
+PATH = "~/A3C-Attention-for-Simultaneous-game/src/"
 sys.path.append(PATH)
 
 import torch
@@ -33,7 +33,7 @@ from learning.train import train
 warnings.filterwarnings("ignore")
 torch.autograd.set_detect_anomaly(True)
 
-cpu_count = int(os.environ["SLURM_JOB_CPUS_PER_NODE"])
+cpu_count = 8 #int(os.environ["SLURM_JOB_CPUS_PER_NODE"])
 parser = argparse.ArgumentParser()
 parser.add_argument("--seed", type=int, default=randint(1, 100000))
 parser.add_argument("--nb-processes", type=int, default=cpu_count)
@@ -45,7 +45,7 @@ parser.add_argument(
     default=ss,
 )
 parser.add_argument("--nb-steps", type=int, default=32)
-parser.add_argument("--save-interval", type=int, default=160)
+parser.add_argument("--save-interval", type=int, default=2460)
 parser.add_argument("--nb-conv-layers", type=int, default=4)
 parser.add_argument("--nb-filters", type=int, default=32)
 parser.add_argument("--latent-dim", type=int, default=128)
@@ -69,6 +69,8 @@ parser.add_argument(
 )
 parser.add_argument("--device", type=str, default="cpu")
 parser.add_argument("--check-point", type=str, default=None)
+parser.add_argument("--save-path",  type=str, default=None)
+parser.add_argument("--experiment-name",  type=str, default=None)
 parser.add_argument(
     "--include-opponent-loss", dest="include_opponent_loss", action="store_true"
 )
@@ -79,24 +81,27 @@ parser.set_defaults(approximate_hard_attention=True, include_opponent_loss=True)
 
 if __name__ == "__main__":
 
-    SAVING_PATH = "/home/hbaier/Pommerman-project/tu-eind-AGSMCTS/output/bug_fixed/results/training-4.txt"
+    # SAVING_PATH = "/home/hbaier/Pommerman-project/tu-eind-AGSMCTS/output/bug_fixed/results/training-4.txt"
     args = parser.parse_args()
     reward_shapers = args.reward_shapers
     opponent_classes = args.opponent_classes
     combined_opponent_classes = ",".join(opponent_classes)
-    Path(f"../saved_models/{combined_opponent_classes}").mkdir(
+    experiment_name = args.experiment_name
+    Path(f"../saved_models/{combined_opponent_classes}_{experiment_name}").mkdir(
         exist_ok=True, parents=True
     )
     os.environ["OMP_NUM_THREADS"] = "1"
     mp.set_start_method("spawn")
     device = gpu if args.device.lower() == "gpu" else cpu
     seed = args.seed
-    use_cython = args.nb_players == 4
+    # use_cython = args.nb_players == 4
+    use_cython = False
     max_grad_norm = args.max_grad_norm
     nb_processes = args.nb_processes
     nb_opponents = args.nb_players - 1
     nb_steps = args.nb_steps
     save_interval = args.save_interval
+    save_path = args.save_path
     include_opponent_loss = args.include_opponent_loss
     model_spec = {
         "nb_conv_layers": args.nb_conv_layers,
@@ -142,7 +147,7 @@ if __name__ == "__main__":
     lock = mp.Lock()
 
     # Initializing monitoring process
-    args = (shared_model, optimizer, opponent_classes, save_interval)
+    args = (shared_model, optimizer, opponent_classes, save_interval, experiment_name)
     p = mp.Process(target=monitor, args=args)
     p.start()
     processes.append(p)
@@ -166,7 +171,7 @@ if __name__ == "__main__":
             max_grad_norm,
             include_opponent_loss,
             device,
-            SAVING_PATH,
+            save_path,
         )
         p = mp.Process(target=train, args=args)
         p.start()

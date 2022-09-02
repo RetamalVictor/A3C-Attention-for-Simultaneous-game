@@ -6,6 +6,9 @@ from learning.reward_shaping.reward_shaping_component import RewardShapingCompon
 
 
 class MobilityComponent(RewardShapingComponent):
+    """
+    Added curiosity reward
+    """
     def __init__(self, mobility_reward=0.005, buffer_length=121):
         super().__init__()
         self.mobility_reward = mobility_reward

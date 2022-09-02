@@ -11,4 +11,4 @@ install:
 train:
 	cd ~/tu-eind-AGSMCTS/src &&\
 		python3 learn.py
-  
+
