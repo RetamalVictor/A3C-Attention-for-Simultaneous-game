@@ -18,7 +18,7 @@ from pathlib import Path
 from random import randint
 import sys
 
-PATH = r"C:\Users\victo\Desktop\VU master\pommerman\tu-eind-AGSMCTS\src"
+PATH = "~/A3C-Attention-for-Simultaneous-game/src/"
 sys.path.append(PATH)
 
 import torch
