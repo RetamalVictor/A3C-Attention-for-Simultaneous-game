@@ -8,7 +8,3 @@ install:
 		cd ~/A3C-Attention-for-Simultaneous-game/cython-env &&\
 		python3 setup.py develop -d ~/.pommerman/lib/python3.8/site-packages
 		
-train:
-	cd ~/tu-eind-AGSMCTS/src &&\
-		python3 learn.py
-
