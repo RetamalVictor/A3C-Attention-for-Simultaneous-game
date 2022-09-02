@@ -3,6 +3,7 @@ output-plots/
 results/
 *.png
 *.sh
+playground/
 
 # Pycharm
 .idea

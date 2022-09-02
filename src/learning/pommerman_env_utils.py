@@ -20,7 +20,7 @@ from pommerman_env.agents.smart_random_agent import (
 )
 from pommerman_env.agents.static_agent import StaticAgent
 from pommerman_env.pommerman_base_env import PommermanBaseEnv
-#from pommerman_env.pommerman_cython_env import PommermanCythonEnv
+from pommerman_env.pommerman_cython_env import PommermanCythonEnv
 from pommerman_env.pommerman_python_env import PommermanPythonEnv
 
 
