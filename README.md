@@ -15,3 +15,44 @@ A set of requirements is specified in the requirement.txt file.
 ```
 $ pip install -r requirement.txt
 ```
+## Learning
+### Training an agent
+To train an agent, run the file ```learn.py ```. The default params will run the ```baseline A3C model```, in a FFA 4 player match, with a training duration of 800 steps. 
+```
+$ python3 -u learn.py --experiment-name <exp-name> --save-path <save_path>
+```
+More about default parameters in the docs.
+
+To launch training with the ```Attention version``` with Attention parameter specifications.
+```
+$ python3 -u learn.py --nb-players 4 --nb-soft-attention-heads 5 --hard-attention-rnn-hidden-size 128 --experiment-name <exp-name> --save-path <save_path>
+```
+As an approximation to run ~500.000 episodes, ```A3C versions``` takes 100h and ```Attention Version``` takes 200h in Snellius Cluster with 1/3 tcn node.
+The trained agent checkpoints will be stored in a directory named ```/saved-models/<opponent_classes>-<experiment_name>```
+
+### Visualization
+To visualize the performance of your agent while playing the game. A visualization script is include in the ```pommerman_env``` directory.
+To run the visualization
+```
+$ python3 visualization.py --version "Att" --model-path <model-path>
+```
+For custom training parameters, you will need to modify the model parameters used to load the checkpoints.
+
+
+## Planning
+To tune a method (e.g., vanilla SMMCTS), you can run the following command:
+```
+bash planning/tune_smmmcts.sh
+```
+After modifying the tune_smmmcts.sh file. For instance, if I want to choose the best parameter for vanilla SMMCTS
+where the trained model is not used, I would add the following options to the last line of the beforementioed file:
+```
+--no-pw --search-opponent-actions --policy-estimation uniform --opponent-classes "simple, simple, simple" --nb-games 200 --nb-plays 1 --mcts-iterations 500
+```
+Note that you have to modify planning/tune_smmcts.py to choose the parameter of interest. Tuning those parameters might
+take weeks for the neural network model.
+Finally, to compute the win rate, tie rate and lose rate, you can run the following command with the desired parameter:
+```
+bash planning/evaluate_smmmcts.sh
+```
+which will compute the above-mentioned metrics. This will take days for the neural network model.
