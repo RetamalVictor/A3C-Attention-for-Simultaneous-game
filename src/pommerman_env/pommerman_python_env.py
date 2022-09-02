@@ -125,3 +125,6 @@ class PommermanPythonEnv(PommermanBaseEnv):
         """
         self.env._init_game_state = game_state
         self.env.set_json_info()
+    
+    def close(self):
+        self.env.close()

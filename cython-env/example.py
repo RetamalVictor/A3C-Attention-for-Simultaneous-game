@@ -7,7 +7,7 @@ env = cpommerman.make()
 
 start_time = time.time()
 steps = 0
-for i in range(1000):
+for i in range(10):
     env.reset()
     done = False
     while not done:

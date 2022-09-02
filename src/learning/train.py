@@ -43,17 +43,17 @@ def reshape_tensors_for_loss_func(
     The Shapes are specified in code comments.
 
     Parameters:
-    - steps: int, number of steps in the simulation.
-    - nb_opponents  : int with the number of opponents 1 or 3.
-    - nb_actions    : int action space.
-    - opponent_log_prob: Tensor, probability distribution of the actions predicted
+    :steps: int, number of steps in the simulation.
+    :nb_opponents  : int with the number of opponents 1 or 3.
+    :nb_actions    : int action space.
+    :opponent_log_prob: Tensor, probability distribution of the actions predicted
                         by the opponents models.
-    - opponent_actions_ground_truths: real actions of the opponent in the game.
-    - device        : device used for training.
+    :opponent_actions_ground_truths: real actions of the opponent in the game.
+    :device        : device used for training.
     
     Returns:
-    - opponent_log_probs: shape(nb_opponents, nb_steps, nb_actions)
-    - opponent_actions_ground_truths: shape(nb_opponents, nb_steps)
+    :opponent_log_probs: shape(nb_opponents, nb_steps, nb_actions)
+    :opponent_actions_ground_truths: shape(nb_opponents, nb_steps)
     """
     # (nb_steps, nb_opponents, nb_actions)
     opponent_log_probs = torch.stack(opponent_log_probs)
@@ -108,26 +108,26 @@ def collect_trajectory(
     Collect trajectory runs an episode in the simulation and collects
     the information from the episode.
     Parameters:
-    - env: Gym environment.
-    - states        : The initial state for the simulation.
-    - lock          : The lock for multiprocessing purposes.
-    - counter       : Episode counter for multiprocessing purposes.
-    - agents        : List of agents to play the game in the Gym environment. More
+    :env: Gym environment.
+    :states        : The initial state for the simulation.
+    :lock          : The lock for multiprocessing purposes.
+    :counter       : Episode counter for multiprocessing purposes.
+    :agents        : List of agents to play the game in the Gym environment. More
                         information in the Pommerman repository.
-    - nb_opponents  : int with the number of opponents 1 or 3.
-    - nb_actions    : int action space.
-    - nb_steps      : int max number of steps per simulation.
-    - device        : device used for training.
-    - reward_shaper : Reward_shaper object to collect rewards.
+    :nb_opponents  : int with the number of opponents 1 or 3.
+    :nb_actions    : int action space.
+    :nb_steps      : int max number of steps per simulation.
+    :device        : device used for training.
+    :reward_shaper : Reward_shaper object to collect rewards.
 
     Returns:
-    - steps         : int number of steps in the game.
-    - state         : The last state of the game.
-    - done          : bool flag for game finished.
-    - running_reward: The accumulated reward collected during the game.
-    - agent_trajectory: Tuple containing (agent_rewards, agent_values, agent_log_probs, agent_entropies)
-    - opponent_trajectory: Tuple containing (opponent_log_probs, opponent_actions_ground_truths)
-    - opponent_influences: Pytorch tensor; Attention values for every opponent.
+    :steps         : int number of steps in the game.
+    :state         : The last state of the game.
+    :done          : bool flag for game finished.
+    :running_reward: The accumulated reward collected during the game.
+    :agent_trajectory: Tuple containing (agent_rewards, agent_values, agent_log_probs, agent_entropies)
+    :opponent_trajectory: Tuple containing (opponent_log_probs, opponent_actions_ground_truths)
+    :opponent_influences: Pytorch tensor; Attention values for every opponent.
     """
     agent_rewards = []
     agent_values = []
@@ -213,8 +213,8 @@ def ensure_shared_grads(model, shared_model):
     """
     Auxiliart function to share gradients in multiprocessing.
     Params:
-    - model         : Pytorch based model.
-    - shared_model  : pytorch based model.
+    :model         : Pytorch based model.
+    :shared_model  : pytorch based model.
     """
     for param, shared_param in zip(model.parameters(), shared_model.parameters()):
         if shared_param.grad is not None:
@@ -252,18 +252,18 @@ def train(
     6.- Reset
 
     Params:
-    - rank: int, auxliar value to set seed
-    - seed: int, seed value for training
-    - use_cython    : bool, if true, the backend for the simulation runs Cython.
-    - model_spec    : Dict(), Params required to initialize the model.
-    - nb_opponents  : int with the number of opponents 1 or 3.
-    - nb_actions    : int action space.
-    - opponent_classes: List[str,str,...] Specification for agent classes
-    - reward_shapers  : List[str,str,...] Specification for rewards
-    - max_grad_norm   : float, max gradient allowed
-    - include_opponent_loss: if true, opponent models loss is included.
-    - device        : device used for training.
-    - SAVING_PATH: path to save results in .txt
+    :rank: int, auxliar value to set seed
+    :seed: int, seed value for training
+    :use_cython    : bool, if true, the backend for the simulation runs Cython.
+    :model_spec    : Dict(), Params required to initialize the model.
+    :nb_opponents  : int with the number of opponents 1 or 3.
+    :nb_actions    : int action space.
+    :opponent_classes: List[str,str,...] Specification for agent classes
+    :reward_shapers  : List[str,str,...] Specification for rewards
+    :max_grad_norm   : float, max gradient allowed
+    :include_opponent_loss: if true, opponent models loss is included.
+    :device        : device used for training.
+    :SAVING_PATH: path to save results in .txt
     """
 
     # Env and agent creation
@@ -358,7 +358,7 @@ def train(
         running_reward += reward
         episode_batches += 1
         with open(SAVING_PATH, "a") as f:
-            f.write(f"{reward},{total_loss.item()}\n")
+            f.write(f"{reward},{opponent_policy_loss.item()},{steps},{total_loss.item()}\n")
             f.close()
 
         if done:
