@@ -14,9 +14,15 @@ from learning.model.agent_model import create_agent_model
 import torch
 import torch.nn.functional as F
 
+<<<<<<< Updated upstream
 
 def main():
     # Prepare the agents
+=======
+parser = argparse.ArgumentParser()
+parser.add_argument("--version", type=str, default='Att', choices=['Att', 'A3C'])
+parser.add_argument("--model-path", type=str, default='~/A3C-Attention-for-Simultaneous-game/src/saved_models/simple,simple,simple_Attention_version/agent_model_Att_version.pt')
+>>>>>>> Stashed changes
 
     # Need the model for this
     device = "cpu"
@@ -107,9 +113,21 @@ def main():
             actions = [agent_action, *opponent_actions]
             state, rewards, done = env.step(actions)
             env.render()
+<<<<<<< Updated upstream
         print("Episode {} finished".format(i_episode))
+=======
+        print(f"Episode {i_episode} finished with reward {rewards}")
+>>>>>>> Stashed changes
     env.close()
 
 
 if __name__ == "__main__":
+<<<<<<< Updated upstream
     main()
+=======
+    args = parser.parse_args()
+    version = args.version
+    model_path = args.model_path
+
+    main(version, model_path)
+>>>>>>> Stashed changes
