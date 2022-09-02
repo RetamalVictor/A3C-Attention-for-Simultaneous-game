@@ -42,10 +42,9 @@ For custom training parameters, you will need to modify the model parameters use
 ## Planning
 To tune a method (e.g., vanilla SMMCTS), you can run the following command:
 ```
-bash planning/tune_smmmcts.sh
+$ python3  planning/tune_smmmcts.py
 ```
-After modifying the tune_smmmcts.sh file. For instance, if I want to choose the best parameter for vanilla SMMCTS
-where the trained model is not used, I would add the following options to the last line of the beforementioed file:
+For instance, if I want to choose the best parameter for vanilla SMMCTS where the trained model is not used, you should add the following options to the launch command
 ```
 --no-pw --search-opponent-actions --policy-estimation uniform --opponent-classes "simple, simple, simple" --nb-games 200 --nb-plays 1 --mcts-iterations 500
 ```
@@ -53,6 +52,6 @@ Note that you have to modify planning/tune_smmcts.py to choose the parameter of 
 take weeks for the neural network model.
 Finally, to compute the win rate, tie rate and lose rate, you can run the following command with the desired parameter:
 ```
-bash planning/evaluate_smmmcts.sh
+$ python3 planning/evaluate_smmmcts.py
 ```
 which will compute the above-mentioned metrics. This will take days for the neural network model.
